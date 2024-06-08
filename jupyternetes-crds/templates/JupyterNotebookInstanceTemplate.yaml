@@ -1,0 +1,47 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: jupyternotebookinstancetemplates.jupyternetes.io
+spec:
+  scope: Namespaced
+  group: jupyternetes.io
+  names:
+    kind: JupyterNotebookInstanceTemplate
+    plural: jupyternotebookinstancetemplates
+    singular: jupyternotebookinstancetemplate
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                pods:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the pod
+                      
+                      labels:
+                        type: object
+                        additionalProperties:
+                          type: string
+
+                      annotations:
+                        type: object
+                        additionalProperties:
+                          type: string
+
+                      spec:
+                        type: object
+                        description: A V1PodSpec for the pod being provisioned
+                        x-kubernetes-preserve-unknown-fields: true
+                        
+

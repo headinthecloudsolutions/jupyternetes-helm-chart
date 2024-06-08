@@ -1,0 +1,32 @@
+apiVersion: jupyternetes.io/v1
+kind: JupyterNotebookInstanceTemplate
+metadata:
+   name: default-template
+   namespace: {{ .Release.Namespace }}
+spec:
+   pods:
+      - name: "{username}"
+        annotations:
+           hub.jupyter.org/username: "{unescaped_username}"
+        labels:
+           app: jupyterhub
+           component: singleuser-server
+           hub.jupyter.org/username: "{username}"
+        spec:
+          affinity:
+           nodeAffinity:
+             preferredDuringSchedulingIgnoredDuringExecution:
+             - preference:
+                 matchExpressions:
+                 - key: hub.jupyter.org/node-purpose
+                   operator: In
+                   values:
+                   - user
+           containers:
+           - name: notebook
+             image: jupyter/datascience-notebook:latest
+             env:
+             - name: JUPTERHUB_USERNAME
+               value: "{unescaped_username}"
+             - name: JUPYTERHUB_OAUTH_CALLBACK_URL
+               value: "/user/{unescaped_username}/oauth_callback"

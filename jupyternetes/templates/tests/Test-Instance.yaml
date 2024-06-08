@@ -1,0 +1,12 @@
+apiVersion: jupyternetes.io/v1
+kind: JupyterNotebookInstance
+metadata:
+   name: joe-2ebloggs-40some-2eorg
+   namespace: {{ .Release.Namespace }}
+spec:
+   template:
+     name: default-template
+     namespace: {{ .Release.Namespace }}
+   variables:
+     unescaped_username: "joe.bloggs@some.org"
+     username: "joe-2ebloggs-40some-2eorg"
