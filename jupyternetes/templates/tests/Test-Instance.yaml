@@ -1,8 +1,10 @@
 apiVersion: jupyternetes.io/v1
 kind: JupyterNotebookInstance
 metadata:
-   name: joe-2ebloggs-40some-2eorg
-   namespace: {{ .Release.Namespace }}
+  name: joe-2ebloggs-40some-2eorg
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": test
 spec:
    template:
      name: default-template
